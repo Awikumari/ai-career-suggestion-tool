@@ -1,0 +1,160 @@
+<!doctype html>
+<html>
+  <head>
+    <title>AI Career Suggestion Tool</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", sans-serif;
+      }
+
+      body {
+        height: 100vh;
+        background: linear-gradient(135deg, #a570af, #674788);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .container {
+        background: #e3f2fd;
+        border: 2px solid #90caf9;
+        border-radius: 25px;
+        padding: 55px;
+        width: 520px;
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+        text-align: center;
+        color: #1a1a1a;
+        transition: 0.3s ease;
+      }
+
+      .container:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+      }
+
+      h2 {
+        margin-bottom: 25px;
+        font-size: 22px;
+        letter-spacing: 1px;
+      }
+
+      textarea {
+        width: 100%;
+        padding: 12px;
+        margin: 10px 0;
+        border-radius: 10px;
+        border: none;
+        resize: none;
+        font-size: 14px;
+        outline: none;
+      }
+
+      textarea:focus {
+        box-shadow: 0 0 8px #fff;
+      }
+
+      button {
+        margin-top: 15px;
+        padding: 12px 25px;
+        border-radius: 25px;
+        border: 1px solid #1a1a1a;
+        background: white;
+        color: #6391e7;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.3s ease;
+      }
+
+      button:hover {
+        background: #7b52a4;
+        color: white;
+        transform: scale(1.05);
+      }
+
+      .result {
+        margin-top: 25px;
+        padding: 15px;
+        border-radius: 15px;
+        background: rgba(255, 255, 255, 0.3);
+        border: 1px solid #1a1a1a;
+        animation: fadeIn 0.5s ease-in-out;
+      }
+
+      .career-item {
+        margin: 10px 0;
+        padding: 8px;
+        background: rgba(255, 255, 255, 0.6);
+        border-radius: 8px;
+        font-weight: bold;
+      }
+
+      .confidence {
+        color: #2e7d32;
+        font-weight: bold;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @media (max-width: 500px) {
+        .container {
+          width: 90%;
+          padding: 25px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <h2>AI Career Suggestion Tool</h2>
+
+      <form action="/predict" method="POST">
+        <textarea
+          name="skills"
+          placeholder="Enter your skills (e.g. Python, ML, HTML)"
+          rows="3"
+          required
+        ></textarea>
+
+        <textarea
+          name="interests"
+          placeholder="Enter your interests (e.g. AI, Design, Security)"
+          rows="3"
+          required
+        ></textarea>
+
+        <button type="submit">Predict Career</button>
+      </form>
+
+      {% if top3_results %}
+      <div class="result">
+        <h3>Top Career Suggestions:</h3>
+        {% for item in top3_results %}
+        <div class="career-item">
+          {{ loop.index }}. {{ item.career }}
+          <br />
+          Probability:
+          <span class="confidence">{{ item.confidence }}%</span>
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %} {% if prediction_text %}
+      <div class="result">{{ prediction_text }}</div>
+      {% endif %}
+    </div>
+  </body>
+</html>

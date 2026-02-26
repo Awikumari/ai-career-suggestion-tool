@@ -84,7 +84,6 @@ The system prevents unreliable predictions by:
 This ensures more realistic and reliable career recommendations.
 ---
 ## Future Enhancements
-- Top 3 career recommendations
 - Confidence visualization graph
 - Resume-based career prediction
 - Deployment on cloud platforms
